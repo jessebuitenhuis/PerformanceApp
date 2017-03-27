@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "target": "es6",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true
+  },
+  "exclude": [
+    "../node_modules"
+    ]
+}
