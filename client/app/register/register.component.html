@@ -1,16 +1,22 @@
 <h2>Sign up</h2>
+
+<div class="alert alert-danger" *ngIf="errorMessage">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" (click)="errorMessage = null">&times;</button>
+    <strong>Er is een fout opgetreden:</strong> {{ errorMessage }}
+</div>
+
 <form  role="form" name="register-form">
     <div class="form-group">
         <label for="email" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="email" id="email" placeholder="Email" [(ngModel)]="user.email">
+            <input type="text" class="form-control" name="email" id="email" placeholder="Email" [(ngModel)]="user.email" required>
         </div>
     </div>
 
     <div class="form-group">
         <label for="password" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" [(ngModel)]="user.password">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" [(ngModel)]="user.password" required>
         </div>
     </div>
 
@@ -21,7 +27,7 @@
     <div class="form-group">
         <label for="firstname" class="col-sm-2 control-label">Firstname</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Firstname" [(ngModel)]="user.firstName">
+            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Firstname" [(ngModel)]="user.firstName" required>
         </div>
     </div>
 
@@ -30,9 +36,9 @@
     <div class="form-group">
         <label for="lastname" class="col-sm-2 control-label">Lastname</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Lastname" [(ngModel)]="user.lastName">
+            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Lastname" [(ngModel)]="user.lastName" required>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" (click)="user.$save()">Submit</button>
+    <button type="submit" class="btn btn-primary" (click)="save(user)">Submit</button>
 </form>

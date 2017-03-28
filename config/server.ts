@@ -18,8 +18,13 @@ export class Server {
 
     private _config() : void {
         // Serve static files
-        this.app.use(express.static('build'));
         this.app.use('/node_modules', express.static('node_modules'));
+
+        // Serve generated typescript files
+        this.app.use(express.static('build'));
+
+        // TODO: move client config files to build folder for production
+        this.app.use(express.static('client'));
 
         // Serve api routes
         this.app.use('/api', api);

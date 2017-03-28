@@ -11,5 +11,4 @@ export class User extends BaseResourceModel<User> {}
 @ResourceParams({
     url: 'api/users'
 })
-export class UserResource extends BaseResource<User>{
-}
+export class UserResource extends BaseResource<User, User, User>{}

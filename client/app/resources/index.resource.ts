@@ -1,4 +1,4 @@
-import {ResourceModel, ResourceCRUD, Resource, ResourceMethod} from "ng2-resource-rest";
+import {ResourceCRUD, ResourceModel} from "ng2-resource-rest";
 
 export interface BaseResourceModel<T> {
     _id?: any;
@@ -24,11 +24,9 @@ export class BaseResourceModel<T> extends ResourceModel<T> {
     }
 }
 
-export class BaseResource<T> extends ResourceCRUD<any, T, T> {
-    initResultObject() : BaseResourceModel<T> {
-        return new BaseResourceModel<T>();
+export class BaseResource<TQuery, TShort, TFull> extends ResourceCRUD<TQuery, TShort, TFull> {
+    initResultObject() : BaseResourceModel<TFull> {
+        return new BaseResourceModel<TFull>();
     }
 }
-
-
 
