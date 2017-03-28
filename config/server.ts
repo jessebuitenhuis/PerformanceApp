@@ -18,7 +18,7 @@ export class Server {
 
     private _config() : void {
         // Serve static files
-        this.app.use(express.static('client'));
+        this.app.use(express.static('build'));
         this.app.use('/node_modules', express.static('node_modules'));
 
         // Serve api routes

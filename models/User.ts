@@ -33,4 +33,5 @@ userSchema.virtual('id').get(function(){
 
 userSchema.set('toJSON', { virtuals: true });
 
-export const User: Model<IUserModel> = model<IUserModel>("User", userSchema);
+export const User: Model<
+    IUserModel> = model<IUserModel>("User", userSchema);
