@@ -1,6 +1,9 @@
 import * as express from 'express';
+import * as session from 'express-session';
 import * as path from "path";
 import {api} from "../api";
+import * as passport from 'passport';
+import * as passportConfig from './passport';
 
 export class Server {
     public app: express.Application;
@@ -25,6 +28,12 @@ export class Server {
 
         // TODO: move client config files to build folder for production
         this.app.use(express.static('client'));
+
+        // Setup authentication
+        passportConfig.config(passport);
+        this.app.use(session({secret: 'performanceappisfantastic'}));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
 
         // Serve api routes
         this.app.use('/api', api);

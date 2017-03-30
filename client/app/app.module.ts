@@ -8,6 +8,7 @@ import {RegisterComponent} from "./register/register";
 import {appRoutes} from "./routes";
 import {FormsModule} from "@angular/forms";
 import {ResourceModule} from "ng2-resource-rest";
+import {LoginComponent} from "./login/login.component";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {ResourceModule} from "ng2-resource-rest";
         AppComponent,
         UsersComponent,
         SiteHeaderComponent,
-        RegisterComponent
+        RegisterComponent,
+        LoginComponent
     ],
     bootstrap: [ AppComponent ]
 })

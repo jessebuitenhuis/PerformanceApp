@@ -4,7 +4,17 @@ import {Router} from "express";
 
 export let userApi = Router();
 
-userApi.get('/', function(req, res, next){
+function isAuthorized(req : any, res : any, next : any) {
+    console.log('isloggedin?');
+
+    if (req.isAuthenticated()) {
+        return next();
+    }
+
+    res.status(HttpStatus.UNAUTHORIZED).send('Not logged in!');
+}
+
+userApi.get('/', isAuthorized, function(req, res, next){
     User.find({}, function(err, users) {
         if (err) return next(err);
         users = <any> users.map(user => user.toJSON({virtuals: true}));
