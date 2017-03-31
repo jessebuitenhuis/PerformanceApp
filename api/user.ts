@@ -1,23 +1,14 @@
 import {User} from "../models/User";
-import * as HttpStatus from "http-status-codes";
+import {authorize} from './auth';
 import {Router} from "express";
+import * as HttpStatus from 'http-status-codes';
 
 export let userApi = Router();
 
-function isAuthorized(req : any, res : any, next : any) {
-    console.log('isloggedin?');
-
-    if (req.isAuthenticated()) {
-        return next();
-    }
-
-    res.status(HttpStatus.UNAUTHORIZED).send('Not logged in!');
-}
-
-userApi.get('/', isAuthorized, function(req, res, next){
+userApi.get('/', authorize, function(req, res, next){
     User.find({}, function(err, users) {
         if (err) return next(err);
-        users = <any> users.map(user => user.toJSON({virtuals: true}));
+        users = <any> users.map(user => user.toJSON());
         res.send(users);
     });
 });
@@ -26,7 +17,7 @@ userApi.get('/:id', function(req, res, next) : void {
    User.findById(req.params.id, function(err, user){
        if (err) return next(err);
        if (user == null) res.status(HttpStatus.NOT_FOUND).send("User with given id not found.");
-       res.send(user.toJSON({virtuals: true}));
+       res.send(user.toJSON());
    });
 });
 
