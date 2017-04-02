@@ -11,6 +11,8 @@ export class UsersComponent implements OnInit {
     constructor(private _userResource: UserResource) {}
 
     ngOnInit() {
+        var token = localStorage.getItem('token');
+        this._userResource.setHeaders({'Authorization': token});
         this.users = this._userResource.query();
     }
 }

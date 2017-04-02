@@ -1,11 +1,14 @@
 import {User} from "../models/User";
-import {authorize} from './auth';
 import {Router} from "express";
 import * as HttpStatus from 'http-status-codes';
+import * as passport from "passport";
 
 export let userApi = Router();
 
-userApi.get('/', authorize, function(req, res, next){
+userApi.use(passport.authenticate('jwt'));
+
+userApi.get('/', function(req, res, next){
+    console.log(req.user);
     User.find({}, function(err, users) {
         if (err) return next(err);
         users = <any> users.map(user => user.toJSON());
@@ -22,6 +25,8 @@ userApi.get('/:id', function(req, res, next) : void {
 });
 
 userApi.post('/', function(req, res, next) : void{
+
+    console.log(req.body);
     User.create(req.body, function(err, user){
         if (err) return next(err);
         res.send(user);

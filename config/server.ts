@@ -31,9 +31,9 @@ export class Server {
 
         // Setup authentication
         passportConfig.config(passport);
-        this.app.use(session({secret: 'performanceappisfantastic'}));
+        // this.app.use(session({secret: 'performanceappisfantastic'}));
         this.app.use(passport.initialize());
-        this.app.use(passport.session());
+        // this.app.use(passport.session());
 
         // Serve api routes
         this.app.use('/api', api);

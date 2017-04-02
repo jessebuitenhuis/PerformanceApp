@@ -15,8 +15,13 @@ export class LoginComponent {
     }
 
     login() : void {
+        var _this = this;
+
         this._http.post('api/login', this.user)
-            .subscribe(() => this._router.navigate(['/users']), (e) => this.errorMessage = e.message);
+            .subscribe(function (result){
+                localStorage.setItem('token', result.headers.get('Authorization'));
+                _this._router.navigate(['/users']);
+            }, (e) => this.errorMessage = e.message);
     }
 
 

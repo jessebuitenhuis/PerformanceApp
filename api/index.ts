@@ -1,8 +1,12 @@
-import {userApi} from "./user";
-import { json } from 'body-parser';
+import {userApi} from "./user.api";
+import {json} from 'body-parser';
 import {Router} from "express";
-import * as passport from "passport";
-import * as HttpStatus from 'http-status-codes';
+import {authenticate} from "passport";
+import {encode} from 'jwt-simple';
+import {appSecret, generateToken} from '../config/passport';
+import {User} from "../models/User";
+import {IToken} from "../interfaces/IToken";
+import * as moment from 'moment';
 
 export let api = Router();
 
@@ -10,15 +14,23 @@ export let api = Router();
 api.use(json());
 
 // Authentication
-api.post('/login', passport.authenticate('local'), function(req, res, next){
-    console.log('user', req.user);
-    res.send('Logged in succesfully');
+api.post('/login', authenticate('local'), function(req, res, next){
+    let token = generateToken(req.user);
+    res.setHeader('X-AUTH-TOKEN', token);
+    res.send();
 
 });
 api.post('/logout', function(req, res, next){
     req.logOut();
-    res.send('Logged out...');
+    res.send();
 });
+
+api.post('/signup', function(req, res, next){
+    User.create(req.body, function(err, user){
+        if (err) return next(err);
+        res.send(user);
+    });
+})
 
 // Api Controllers
 api.use('/users', userApi);

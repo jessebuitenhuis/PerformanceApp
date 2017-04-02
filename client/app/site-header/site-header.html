@@ -7,7 +7,11 @@
         <ul class="nav navbar-nav">
             <li><a routerLink="/users" routerLinkActive="active">Users</a></li>
             <li><a routerLink="/register" routerLinkActive="active">Signup</a></li>
-            <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a routerLink="/login" routerLinkActive="active" *ngIf="!auth.loggedIn()">Login</a></li>
+            <li><a (click)="auth.logOut()" *ngIf="auth.loggedIn()">Logout</a></li>
         </ul>
     </div>
 </nav>

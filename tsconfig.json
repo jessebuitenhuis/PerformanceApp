@@ -4,6 +4,7 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "outDir": "./build"
   },
   "exclude": [
