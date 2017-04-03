@@ -1,12 +1,9 @@
-import {
-    Http, Request, Response, RequestOptions, RequestOptionsArgs, XHRBackend,
-    ConnectionBackend
-} from "@angular/http";
-import {Injectable, NgModule} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {Router} from "@angular/router";
 
+import {Injectable, NgModule} from "@angular/core";
+import {Http, Response, Request, RequestOptions, RequestOptionsArgs, XHRBackend} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 export const tokenName = 'performance_app_token';
+
 
 @Injectable()
 export class AuthHttp extends Http {
@@ -22,7 +19,7 @@ export class AuthHttp extends Http {
     }
 
     static removeToken(err: any) : any {
-        if (err.message === 401) {
+        if (err.status === 401) {
             localStorage.removeItem(tokenName);
         }
 

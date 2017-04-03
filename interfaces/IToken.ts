@@ -1,4 +1,5 @@
+import {IUser} from "./IUser";
 export interface IToken {
-    user_id: string,
+    user: IUser,
     exp?: number
 }

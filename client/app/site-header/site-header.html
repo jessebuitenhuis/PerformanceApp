@@ -11,6 +11,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li><a routerLink="/login" routerLinkActive="active" *ngIf="!auth.loggedIn()">Login</a></li>
+            <li *ngIf="auth.loggedIn()">Logged in as: {{ auth.getUser()?.name }}</li>
             <li><a (click)="auth.logOut()" *ngIf="auth.loggedIn()">Logout</a></li>
         </ul>
     </div>
