@@ -2,7 +2,7 @@ import { Document, Schema, Model, model } from 'mongoose';
 import {IUser} from "../interfaces/IUser";
 import { genSalt, hash, compare } from 'bcryptjs';
 
-export interface IUserModel extends IUser, Document {
+export interface IUserModel extends IUser, Model<Document> {
     validatePassword(password: string, done: (err: any, isMatch?: boolean) => void) : boolean;
 };
 
@@ -59,5 +59,4 @@ userSchema.method('validatePassword', function(password: string, next: any){
     });
 });
 
-export const User: Model<
-    IUserModel> = model<IUserModel>("User", userSchema);
+export const User: IUserModel = <IUserModel>model("User", userSchema);

@@ -2,38 +2,21 @@ import {userApi} from "./user.api";
 import {json} from 'body-parser';
 import {Router} from "express";
 import {authenticate} from "passport";
-import {encode} from 'jwt-simple';
-import {appSecret, generateToken} from '../config/passport';
-import {User} from "../models/User";
-import {IToken} from "../interfaces/IToken";
-import * as moment from 'moment';
+import {authApi} from "./auth.api";
+import {goalApi} from "./goal.api";
 
 export let api = Router();
 
 // Middleware
 api.use(json());
 
-// Authentication
-api.post('/login', authenticate('local'), function(req, res, next){
-    let token = generateToken(req.user);
-    res.setHeader('X-AUTH-TOKEN', token);
-    res.send();
+//Public Controllers
+api.use(authApi);
 
-});
-api.post('/logout', function(req, res, next){
-    req.logOut();
-    res.send();
-});
-
-api.post('/signup', function(req, res, next){
-    User.create(req.body, function(err, user){
-        if (err) return next(err);
-        res.send(user);
-    });
-})
-
-// Api Controllers
+//Private Controllers
+api.use(authenticate('jwt'));
 api.use('/users', userApi);
+api.use('/goals', goalApi);
 
 // Error Middleware
 api.use(errorHandler)
