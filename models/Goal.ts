@@ -1,39 +1,42 @@
-import {IGoal} from "../interfaces/IGoal";
-import {Document, Model, model, Schema, Types} from "mongoose";
+import {IGoal} from "../interfaces/IGoal"
+import {connection, Types} from "mongoose"
+import {
+    field, required, schemaDef, ModelFromSchemaDef, IMongooseDocument, ref
+} from "mongoose-decorators-ts"
 
-export interface IGoalModel extends IGoal, Model<Document> {
-    createAsChild(parentId: string, goal: IGoalModel, cb: (err?: any, doc?: IGoal) => void) : void;
-    updateAsChild(params: {parentId: string, childId: string}, goal: IGoalModel, cb: (err?: any, doc?: IGoal) => void) : void;
-};
+@schemaDef({name: 'Goal'})
+export class goalSchema {
+    @required()
+    name: string
 
-export let goalSchema : Schema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    startDate: Date,
-    endDate: Date,
-    parentGoal: {type: Types.ObjectId, ref: 'Goal'}
-});
+    @field()
+    startDate: Date
 
-goalSchema.statics.createAsChild = function(parentId: string, goal: IGoalModel, cb: (err?: any, goal?: IGoal) => void) {
-    goal.parentGoal = parentId;
-    (<IGoalModel>this).create(goal, cb);
-};
+    @field()
+    endDate: Date
 
-goalSchema.statics.updateAsChild = function(params : {parentId: string, childId: string}, goal: IGoalModel, cb: (err?: any, goal?: IGoal) => void) {
+    @ref('Goal', {type: Types.ObjectId})
+    parentGoal: string;
 
-    let _this = <IGoalModel>this;
+    static createAsChild(this: typeof Goal, parentId: string, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
+        goal.parentGoal = parentId;
+        this.create(goal, cb);
+    }
 
-    this.findOneById(goal._id, function (err: any, childGoal: IGoal) {
-        if (err) return cb(err);
-        if (goal) {
-            if (goal.parentGoal !== params.parentId) return cb(new Error("Milestone not found in goal."))
+    static updateAsChild(this: typeof Goal, params: {parentId: string, childId: string}, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
+        let _this = this;
 
-            _this.findByIdAndUpdate(childGoal._id, goal, cb);
-        }
-        _this.create(goal, cb);
-    })
-};
+        this.findById(goal._id, function (err: any, childGoal: IGoal) {
+            if (err) return cb(err);
+            if (goal) {
+                if (goal.parentGoal !== params.parentId) return cb(new Error("Milestone not found in goal."))
 
-export let Goal : IGoalModel = <IGoalModel>model("Goal", goalSchema);
+                _this.findByIdAndUpdate(childGoal._id, goal, cb);
+            }
+            _this.create(goal, cb);
+        })
+    }
+}
+
+export const Goal = ModelFromSchemaDef<typeof goalSchema, goalSchema>(goalSchema, connection);
+export type Goal = IMongooseDocument<goalSchema>;

@@ -1,62 +1,66 @@
-import { Document, Schema, Model, model } from 'mongoose';
-import {IUser} from "../interfaces/IUser";
-import { genSalt, hash, compare } from 'bcryptjs';
+import {IMongooseDocument, ModelFromSchemaDef, pre, required, schemaDef} from "mongoose-decorators-ts"
+import {connection, MongooseDocument} from "mongoose"
+import {genSalt, hash, compare} from 'bcryptjs'
+import {IUser} from "../interfaces/IUser"
 
-export interface IUserModel extends IUser, Model<Document> {
-    validatePassword(password: string, done: (err: any, isMatch?: boolean) => void) : boolean;
+let options = {
+    toJSON: {
+        virtuals: true,
+        transform: function(doc: User, ret: IUser) : IUser {
+            delete ret.password;
+            return ret;
+        }
+    }
 };
 
-export var userSchema: Schema = new Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
+@schemaDef({
+    name: 'User',
+    schema_options: options
+})
+export class userSchema implements IUser {
+    @required()
+    firstName: string
+
+    @required()
+    lastName: string
+
+    @required()
+    email: string
+
+    @required()
+    password: string
+
+    get name(): string {
+        return [this.firstName, this.lastName].join(' ')
     }
-});
 
+    //Todo: fix the any type on this. Problem is the isModified
+    @pre('save')
+    encryptPassword(this: User, next: (err?: any) => void) {
+        var user = this
 
-userSchema.virtual('name').get(function(){
-    return [this.firstName, this.lastName].join(' ');
-});
+        if (!this.isModified('password')) return next()
 
-userSchema.virtual('id').get(function(){
-    return this._id;
-});
+        genSalt(10, function (err, salt) {
+            if (err) return next(err)
 
-userSchema.pre('save', function(next){
-    var user = this;
-    if (!user.isModified('password')) return next();
+            hash(user.password, salt, function (err, hash) {
+                if (err) return next(err)
 
-    genSalt(10, function(err, salt){
-        if (err) return next(err);
+                user.password = hash
+                next()
+            })
+        })
+    }
 
-        hash(user.password, salt, function(err, hash){
-            if (err) return next(err);
+    validatePassword(password: string, next: (err: any, isMatch?: boolean) => void) {
+        compare(password, this.password, function (err, isMatch) {
+            if (err) return next(err)
+            next(null, isMatch)
+        })
+    }
 
-            user.password = hash;
-            next();
-        });
-    });
-});
+}
 
-userSchema.set('toJSON', { virtuals: true });
-
-userSchema.method('validatePassword', function(password: string, next: any){
-    compare(password, this.password, function(err, isMatch){
-        if (err) return next(err);
-        next(null, isMatch);
-    });
-});
-
-export const User: IUserModel = <IUserModel>model("User", userSchema);
+export const User = ModelFromSchemaDef<typeof userSchema, userSchema>(userSchema, connection)
+export type User = IMongooseDocument<userSchema>;

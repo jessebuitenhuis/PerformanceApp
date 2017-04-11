@@ -28,11 +28,16 @@ export function generateToken(user: IUser) : string {
 export function config(passport : PassportStatic) {
     passport.use(new LocalStrategy(
         function(username, password, done) {
+
             User.findOne({email: username}, function (err, user) {
+
                 if (err) return done(err);
                 if (user === null) return done(null, false, {message: 'Incorrect username.'});
 
+
+
                 user.validatePassword(password, function(err, isMatch){
+
                     if (err) return done(err);
                     if (!isMatch) return done(null, false, {message: 'Incorrect password.'});
                     return done(null, user);

@@ -56,9 +56,12 @@
     "express-session": "^1.15.2",
     "jspm": "^0.16.53",
     "jwt-decode": "^2.2.0",
+    "mongoose-decorators-ts": "^1.0.0-alpha2",
+    "node-mongoose-ts": "^0.1.4",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.10"
   },
   "jspm": {
     "directories": {

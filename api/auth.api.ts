@@ -14,6 +14,7 @@ export let authApi = Router();
 
 // Public Routes
 authApi.post('/login', authenticate('local'), function(req, res, next){
+    console.log(req.body);
     let token = generateToken(req.user);
     res.setHeader('X-AUTH-TOKEN', token);
     res.send();
