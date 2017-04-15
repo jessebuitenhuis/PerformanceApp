@@ -1,10 +1,10 @@
-// import {Model, Schema} from "mongoose";
-// import {IGoalModel, Goal} from "./Goal";
-//
-// export interface ITeamGoalModel extends IGoalModel {}
-//
-// export let teamGoalSchema : Schema = new Schema({
-//     team: String
-// });
-//
-// export let TeamGoal : ITeamGoalModel = <ITeamGoalModel>Goal.discriminator('TeamGoal', teamGoalSchema);
+import {ref, schemaDef, getSchema, IMongooseModel} from "mongoose-decorators-ts"
+import {Goal, goalSchema} from "./Goal"
+
+@schemaDef({})
+export class teamGoalSchema {
+    @ref('Team')
+    team: string
+}
+
+export const TeamGoal = Goal.discriminator("TeamGoal", getSchema(teamGoalSchema)) as IMongooseModel<Goal, teamGoalSchema & goalSchema>;

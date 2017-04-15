@@ -30,9 +30,9 @@ export class BaseResourceModel<T> extends ResourceModel<T> {
 }
 
 @ResourceParams({
-    headers: {
-        'Accept': 'appppplication'
-    }
+    // headers: {
+    //     'Accept': 'application/json'
+    // }
 })
 export class BaseResource<TQuery, TShort, TFull> extends ResourceCRUD<TQuery, TShort, TFull> {
     initResultObject() : BaseResourceModel<TFull> {

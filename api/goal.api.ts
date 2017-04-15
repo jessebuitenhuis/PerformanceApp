@@ -2,6 +2,7 @@ import {Router} from "express"
 import {IGoal} from "../interfaces/IGoal"
 import * as HttpStatus from 'http-status-codes'
 import {Goal} from "../models/Goal"
+import {Milestone} from "../models/Milestone"
 
 export let goalApi: Router = Router()
 
@@ -42,42 +43,43 @@ goalApi.delete('/:id', function (req, res, next) {
     })
 })
 
-// let milestoneRouter = Router()
-// goalApi.use('/:goalId/milestones', milestoneRouter)
-//
-// milestoneRouter.get('/', function (req, res, next) {
-//     Milestone.find({parentGoal: req.params.goalId}, function (err, milestones) {
-//         if (err) return next(err)
-//         let retVal = milestones.map(ms => ms.toJSON())
-//         res.send(retVal)
-//     })
-// })
-//
-// milestoneRouter.get('/:id', function (req, res, next) {
-//     Milestone.findOne({id: req.params.id, parentGoal: req.params.goalId}, function (err, milestone) {
-//         if (err) return next(err)
-//         if (!milestone) return res.sendStatus(HttpStatus.NOT_FOUND)
-//         res.send(milestone.toJSON())
-//     })
-// })
-//
-// milestoneRouter.post('/', function (req, res, next) {
-//     Milestone.createAsChild(req.params.goalId, req.body, function (err, milestone) {
-//         if (err) return next(err)
-//         res.send(milestone)
-//     })
-// })
-//
-// milestoneRouter.put('/:id', function (req, res, next) {
-//     Milestone.updateAsChild({parentId: req.params.goalId, childId: req.params.milestoneId}, req.body, function (err, milestone) {
-//         if (err) return next(err)
-//         res.send(milestone)
-//     })
-// })
-//
-// milestoneRouter.delete('/:id', function (req, res, next) {
-//     Milestone.findOneAndRemove({parentId: req.params.goalId, id: req.params.id}, function (err) {
-//         if (err) return next(err)
-//         res.sendStatus(HttpStatus.OK)
-//     })
-// })
+let milestoneRouter = Router()
+goalApi.use('/:goalId/milestones', milestoneRouter)
+
+milestoneRouter.get('/', function (req, res, next) {
+    Milestone.find({parentGoal: req.params.goalId}, function (err, milestones) {
+        if (err) return next(err)
+        let retVal = milestones.map(ms => ms.toJSON())
+        res.send(retVal)
+    })
+})
+
+milestoneRouter.get('/:id', function (req, res, next) {
+    Milestone.findOne({id: req.params.id, parentGoal: req.params.goalId}, function (err, milestone) {
+        if (err) return next(err)
+        if (!milestone) return res.sendStatus(HttpStatus.NOT_FOUND)
+        res.send(milestone.toJSON())
+    })
+})
+
+milestoneRouter.post('/', function (req, res, next) {
+    Milestone.createAsChild(req.params.goalId, req.body, function (err, milestone) {
+        if (err) return next(err)
+        res.send(milestone)
+    })
+})
+
+milestoneRouter.put('/:id', function (req, res, next) {
+    Milestone.updateAsChild({parentId: req.params.goalId, childId: req.params.milestoneId}, req.body, function (err, milestone) {
+        if (err) return next(err)
+        res.send(milestone)
+    })
+})
+
+milestoneRouter.delete('/:id', function (req, res, next) {
+    Milestone.findOneAndRemove({parentId: req.params.goalId, id: req.params.id}, function (err) {
+        if (err) return next(err)
+        res.sendStatus(HttpStatus.OK)
+    })
+})
+

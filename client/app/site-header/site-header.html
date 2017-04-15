@@ -5,14 +5,14 @@
         </div>
 
         <ul class="nav navbar-nav">
-            <li><a routerLink="/users" routerLinkActive="active">Users</a></li>
-            <li><a routerLink="/register" routerLinkActive="active">Signup</a></li>
+            <li><a [routerLink]="['/users']" routerLinkActive="active">Users</a></li>
+            <li><a routerLink="/teams" routerLinkActive="active">Teams</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
+            <li><a routerLink="/register" routerLinkActive="active" *ngIf="!auth.loggedIn()">Signup</a></li>
             <li><a routerLink="/login" routerLinkActive="active" *ngIf="!auth.loggedIn()">Login</a></li>
-            <li *ngIf="auth.loggedIn()">Logged in as: {{ auth.getUser()?.name }}</li>
-            <li><a (click)="auth.logOut()" *ngIf="auth.loggedIn()">Logout</a></li>
+            <li><a (click)="auth.logOut()" *ngIf="auth.loggedIn()">{{ auth.getUser()?.name }} - Logout</a></li>
         </ul>
     </div>
 </nav>

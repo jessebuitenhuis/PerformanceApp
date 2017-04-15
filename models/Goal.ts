@@ -15,15 +15,15 @@ export class goalSchema {
     @field()
     endDate: Date
 
-    @ref('Goal', {type: Types.ObjectId})
+    @ref('Goal')
     parentGoal: string;
 
-    static createAsChild(this: typeof Goal, parentId: string, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
+    createAsChild(this: typeof Goal, parentId: string, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
         goal.parentGoal = parentId;
         this.create(goal, cb);
     }
 
-    static updateAsChild(this: typeof Goal, params: {parentId: string, childId: string}, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
+    updateAsChild(this: typeof Goal, params: {parentId: string, childId: string}, goal: IGoal, cb: (err?: any, goal?: IGoal) => void) {
         let _this = this;
 
         this.findById(goal._id, function (err: any, childGoal: IGoal) {

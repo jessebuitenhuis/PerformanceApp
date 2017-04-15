@@ -9,7 +9,6 @@ export class User extends BaseResourceModel<User> {}
 
 @Injectable()
 @ResourceParams({
-    url: 'api/users',
-    headers: { 'Accept': 'bamm'}
+    url: 'api/users'
 })
 export class UserResource extends BaseResource<User, User, User>{}

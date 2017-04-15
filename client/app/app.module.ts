@@ -13,6 +13,8 @@ import {RequestOptions, Headers, BaseRequestOptions} from "@angular/http";
 import {AuthModule} from "./auth/auth.module";
 import {AuthGuard} from "./auth/authguard";
 import {AuthService} from "./auth/auth.service";
+import {TeamsComponent} from "./teams/teams.component"
+import {TeamDetailComponent} from "./teams/team-detail.component"
 
 export class AppRequestOptions extends BaseRequestOptions {
     headers = new Headers({
@@ -31,6 +33,8 @@ export class AppRequestOptions extends BaseRequestOptions {
     declarations: [
         AppComponent,
         UsersComponent,
+        TeamsComponent,
+        TeamDetailComponent,
         SiteHeaderComponent,
         RegisterComponent,
         LoginComponent

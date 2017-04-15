@@ -1,17 +1,17 @@
-import {IMongooseDocument, ModelFromSchemaDef, pre, required, schemaDef} from "mongoose-decorators-ts"
-import {connection, MongooseDocument} from "mongoose"
+import {field, getSchema, IMongooseDocument, ModelFromSchemaDef, pre, required, schemaDef} from "mongoose-decorators-ts"
 import {genSalt, hash, compare} from 'bcryptjs'
 import {IUser} from "../interfaces/IUser"
+import * as mongoose from "mongoose"
 
 let options = {
     toJSON: {
         virtuals: true,
-        transform: function(doc: User, ret: IUser) : IUser {
-            delete ret.password;
-            return ret;
+        transform: function (doc: User, ret: IUser): IUser {
+            delete ret.password
+            return ret
         }
     }
-};
+}
 
 @schemaDef({
     name: 'User',
@@ -62,5 +62,5 @@ export class userSchema implements IUser {
 
 }
 
-export const User = ModelFromSchemaDef<typeof userSchema, userSchema>(userSchema, connection)
+export const User = ModelFromSchemaDef<typeof userSchema, userSchema>(userSchema, mongoose.connection)
 export type User = IMongooseDocument<userSchema>;
