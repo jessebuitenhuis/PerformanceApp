@@ -1,7 +1,7 @@
 import {IGoal} from "../interfaces/IGoal"
 import {connection, Types} from "mongoose"
 import {
-    field, required, schemaDef, ModelFromSchemaDef, IMongooseDocument, ref
+    field, required, schemaDef, ModelFromSchemaDef, IMongooseDocument, ref, IMongooseModel
 } from "mongoose-decorators-ts"
 
 @schemaDef({name: 'Goal'})
@@ -38,5 +38,5 @@ export class goalSchema {
     }
 }
 
-export const Goal = ModelFromSchemaDef<typeof goalSchema, goalSchema>(goalSchema, connection);
-export type Goal = IMongooseDocument<goalSchema>;
+export const Goal = ModelFromSchemaDef<typeof goalSchema, goalSchema>(goalSchema, connection) as IMongooseModel<IMongooseDocument<goalSchema>, goalSchema>
+export type Goal = IMongooseDocument<goalSchema>

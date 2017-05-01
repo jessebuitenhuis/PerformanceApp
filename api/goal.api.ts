@@ -41,6 +41,7 @@ goalApi.delete('/:id', function (req, res, next) {
         if (err) return next(err)
         return res.sendStatus(HttpStatus.OK)
     })
+    Goal.as
 })
 
 let milestoneRouter = Router()

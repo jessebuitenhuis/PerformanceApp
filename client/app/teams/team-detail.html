@@ -5,3 +5,16 @@
     <li class="active">{{ team?.name }}</li>
 </ol>
 <h2>{{ team?.name }}</h2>
+
+
+<div class="well">
+    <legend>Add user to team</legend>
+    <form (submit)="addUser()">
+        <input type="text" (ngModel)="newUser" />
+        <input type="submit" value="Save" />
+    </form>
+</div>
+<h3>Users</h3>
+<ul>
+    <li *ngFor="let user of team?.users">{{user.id }}: {{ user.name }} <a (click)="removeUser(user)">Remove from team</a></li>
+</ul>
