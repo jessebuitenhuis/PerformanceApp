@@ -20,19 +20,17 @@ export class TeamDetailComponent implements OnInit {
             .subscribe(team => this.team = team);
     }
 
-    addUser() {
-        this.newUser = '58e2b181af4c0c387b1e6931';
-        this._teamResource.updateUser({id: this.teamId, userId: this.newUser}).$observable
+    public addUser() {
+        // this.team.$setData({name:'bamz'})
+        console.log(this.team);
+     // this.team.sayHi()
+        this.team.$addUser(this.newUser)
             .subscribe(() => this.newUser = null, e => this.userError = e)
-
     }
 
-    //TODO this 'any' bothers me
-    removeUser(user: any) {
-        this._teamResource.removeUser({id: this.teamId, userId: user._id}).$observable
-            .subscribe(() => {
-                var index = this.team.users.indexOf(user)
-                if (index > -1) this.team.users.splice(index, 1)
-            })
-    }
+    // //TODO this 'any' bothers me
+    // removeUser(user: any) {
+    //     this._teamResource.removeUser().$observable
+    //         .subscribe(this.getTeam())
+    // }
 }

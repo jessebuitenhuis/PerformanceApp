@@ -10,8 +10,8 @@
 <div class="well">
     <legend>Add user to team</legend>
     <form (submit)="addUser()">
-        <input type="text" (ngModel)="newUser" />
-        <input type="submit" value="Save" />
+        <input type="text" name="user-id"[(ngModel)]="newUser" />
+        <button type="submit">Save</button>
     </form>
 </div>
 <h3>Users</h3>
