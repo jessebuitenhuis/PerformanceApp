@@ -1,52 +1,63 @@
-
-import {Injectable, NgModule} from "@angular/core";
-import {Http, Response, Request, RequestOptions, RequestOptionsArgs, XHRBackend} from "@angular/http";
-import {Observable} from "rxjs/Observable";
-export const tokenName = 'performance_app_token';
+import {Injectable, NgModule} from "@angular/core"
+import {Http, Response, Request, RequestOptions, RequestOptionsArgs, XHRBackend} from "@angular/http"
+import {Observable} from "rxjs/Observable"
+export const tokenName = 'performance_app_token'
 
 
 @Injectable()
 export class AuthHttp extends Http {
-    static saveToken(res: Response) : Response {
+    static saveToken(res: Response): Response {
         if (res.headers) {
-            let newToken = res.headers.get('X-AUTH-TOKEN');
+            let newToken = res.headers.get('X-AUTH-TOKEN')
             if (newToken) {
-                localStorage.setItem(tokenName, newToken);
+                localStorage.setItem(tokenName, newToken)
             }
         }
 
-        return res;
+        return res
     }
 
-    static removeToken(err: any) : any {
-        if (err.status === 401) {
-            localStorage.removeItem(tokenName);
+    static removeToken(): any {
+        localStorage.removeItem(tokenName)
+    }
+
+    static handleHttpError(err: any): any {
+        switch (err.status) {
+            case 401:
+                AuthHttp.removeToken()
+                break
+            case 404:
+                err._body = err.statusText
+                break
+            default:
+                break
         }
 
-        return err;
+        return Observable.throw(err)
     }
 
-    request(url: string | Request, options?: RequestOptionsArgs) : Observable<Response> {
+    request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+
         if (typeof url === 'string') {
-            return this.get(url, options);
+            return this.get(url, options)
         }
 
-        let token = localStorage.getItem(tokenName);
+        let token = localStorage.getItem(tokenName)
 
         if (token) {
             if (url instanceof Request) {
-                url.headers.set('Authorization', token);
+                url.headers.set('Authorization', token)
             }
         }
 
         return super.request(url, options)
             .map(AuthHttp.saveToken)
-            .catch(AuthHttp.removeToken);
+            .catch(AuthHttp.handleHttpError)
     }
 }
 
 export function AuthHttpFactory(backend: XHRBackend, requestOptions: RequestOptions) {
-    return new AuthHttp(backend, requestOptions);
+    return new AuthHttp(backend, requestOptions)
 }
 
 @NgModule({
@@ -58,4 +69,5 @@ export function AuthHttpFactory(backend: XHRBackend, requestOptions: RequestOpti
         }
     ]
 })
-export class AuthModule { }
+export class AuthModule {
+}

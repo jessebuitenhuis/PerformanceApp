@@ -10,11 +10,14 @@
 <div class="well">
     <legend>Add user to team</legend>
     <form (submit)="addUser()">
+        <div class="alert alert-danger" *ngIf="userError">
+            {{ userError }}
+        </div>
         <input type="text" name="user-id"[(ngModel)]="newUser" />
         <button type="submit">Save</button>
     </form>
 </div>
 <h3>Users</h3>
 <ul>
-    <li *ngFor="let user of team?.users">{{user.id }}: {{ user.name }} <a (click)="removeUser(user)">Remove from team</a></li>
+    <li *ngFor="let user of team?.users">{{user.id }}: {{ user.name }} <a (click)="user.$removeFromTeam()">Remove from team</a> <a (click)="user.sayHi()">Say Hi</a></li>
 </ul>

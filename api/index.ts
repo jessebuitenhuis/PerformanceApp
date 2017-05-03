@@ -24,5 +24,5 @@ api.use('/teams', teamApi);
 api.use(errorHandler)
 
 function errorHandler (err : any, req : any, res : any, next : any) : void {
-    res.status(500).send(err.message);
+    res.status(400).send(err.message);
 }

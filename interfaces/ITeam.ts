@@ -1,4 +1,4 @@
 export interface ITeam {
     name: string;
-    users: string[]
+    users: string[] | any
 }

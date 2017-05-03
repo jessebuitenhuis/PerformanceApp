@@ -4,7 +4,7 @@ import {RegisterComponent} from "./register/register";
 import {LoginComponent} from "./login/login.component";
 import {AuthGuard} from "./auth/authguard";
 import {TeamsComponent} from "./teams/teams.component"
-import {TeamDetailComponent} from "./teams/team-detail.component"
+import {TeamDetailComponent} from "./teams/teamDetail.component"
 
 
 export const appRoutes: Routes = [

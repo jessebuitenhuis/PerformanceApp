@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core"
 import {Team, TeamResource} from "../resources/team.resource"
 import {ActivatedRoute} from "@angular/router"
 import {IUser} from "../../../interfaces/IUser"
+import {User} from "../../../models/User"
 @Component({
     selector: 'team-detail',
     templateUrl: 'app/teams/team-detail.html'
@@ -16,21 +17,14 @@ export class TeamDetailComponent implements OnInit {
 
     ngOnInit() {
         this.teamId = this._route.snapshot.params.id;
-        this._teamResource.get({id: this.teamId}).$observable
-            .subscribe(team => this.team = team);
+        this.team = this._teamResource.get({id: this.teamId})
+
+
     }
 
     public addUser() {
-        // this.team.$setData({name:'bamz'})
-        console.log(this.team);
-     // this.team.sayHi()
         this.team.$addUser(this.newUser)
-            .subscribe(() => this.newUser = null, e => this.userError = e)
+            .$observable
+            .subscribe(() => this.newUser = null, e => this.userError = e._body)
     }
-
-    // //TODO this 'any' bothers me
-    // removeUser(user: any) {
-    //     this._teamResource.removeUser().$observable
-    //         .subscribe(this.getTeam())
-    // }
 }

@@ -8,7 +8,7 @@ export interface BaseResourceModel<T> {
     $removeFromList(list: BaseResourceModel<T>[]) : this;
 }
 
-export class BaseResourceModel<T> extends ResourceModel<T & BaseResource<T, T, T>> {
+export class BaseResourceModel<T> extends ResourceModel<T & ResourceCRUD<T, T, T>> {
     constructor(){
         super();
     }
@@ -28,9 +28,9 @@ export class BaseResourceModel<T> extends ResourceModel<T & BaseResource<T, T, T
 }
 
 @ResourceParams({
-    // headers: {
-    //     'Accept': 'application/json'
-    // }
+    headers: {
+        'Accept': 'application/json'
+    }
 })
 export class BaseResource<TQuery, TShort, TFull> extends ResourceCRUD<TQuery, TShort, TFull> {
 }

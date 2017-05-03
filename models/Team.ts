@@ -37,6 +37,7 @@ export class teamSchema {
     static addUser(this: typeof Team, id: string, userId: string, options?: ModelFindByIdAndUpdateOptions): Promise<User> {
         let user: User;
 
+        // userId = //
 
         return User.findById(userId, options)
             .then(result => {

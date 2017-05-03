@@ -14,7 +14,7 @@ import {AuthModule} from "./auth/auth.module";
 import {AuthGuard} from "./auth/authguard";
 import {AuthService} from "./auth/auth.service";
 import {TeamsComponent} from "./teams/teams.component"
-import {TeamDetailComponent} from "./teams/team-detail.component"
+import {TeamDetailComponent} from "./teams/teamDetail.component"
 
 export class AppRequestOptions extends BaseRequestOptions {
     headers = new Headers({
