@@ -10,10 +10,10 @@
 <div class="well">
     <legend>Add user to team</legend>
     <form (submit)="addUser()">
-        <div class="alert alert-danger" *ngIf="userError">
-            {{ userError }}
-        </div>
-        <input type="text" name="user-id"[(ngModel)]="newUser" />
+        <div class="alert alert-danger" *ngIf="userError">{{ userError }}</div>
+        <select [(ngModel)]="newUser" name="new-user">
+            <option *ngFor="let user of users" [value]="user.id" [disabled]="userIsSelected(user)">{{ user.name }}</option>
+        </select>
         <button type="submit">Save</button>
     </form>
 </div>

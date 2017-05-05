@@ -15,6 +15,8 @@ import {AuthGuard} from "./auth/authguard";
 import {AuthService} from "./auth/auth.service";
 import {TeamsComponent} from "./teams/teams.component"
 import {TeamDetailComponent} from "./teams/teamDetail.component"
+import {WherePipe} from "angular-pipes"
+
 
 export class AppRequestOptions extends BaseRequestOptions {
     headers = new Headers({
@@ -37,7 +39,8 @@ export class AppRequestOptions extends BaseRequestOptions {
         TeamDetailComponent,
         SiteHeaderComponent,
         RegisterComponent,
-        LoginComponent
+        LoginComponent,
+        WherePipe
     ],
     providers: [
         { provide: RequestOptions, useClass: AppRequestOptions },

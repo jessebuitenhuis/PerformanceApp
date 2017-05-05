@@ -31,7 +31,8 @@
             'ng2-resource-rest': 'npm:ng2-resource-rest/bundles/ng2-resource-rest.umd.js',
             'angular2-jwt':              'npm:angular2-jwt/angular2-jwt.js',
             'moment':                   'npm:moment/moment.js',
-            'jwt-decode':               'npm:jwt-decode/lib/index.js'
+            'jwt-decode':               'npm:jwt-decode/lib/index.js',
+            'angular-pipes':            'npm:angular-pipes/bundles/bundle.umd.js'
     }
     });
 })(this);
