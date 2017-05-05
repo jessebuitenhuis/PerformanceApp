@@ -2,6 +2,7 @@ import {field, getSchema, IMongooseDocument, ModelFromSchemaDef, pre, required, 
 import {genSalt, hash, compare} from 'bcryptjs'
 import {IUser} from "../interfaces/IUser"
 import * as mongoose from "mongoose"
+import {Team} from "./Team"
 
 let options = {
     toJSON: {

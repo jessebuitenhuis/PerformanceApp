@@ -2,6 +2,8 @@ import {User} from "../models/User";
 import {Router} from "express";
 import * as HttpStatus from 'http-status-codes';
 import * as passport from "passport";
+import {Team} from "../models/Team"
+import {Types} from "mongoose"
 
 export let userApi = Router();
 
@@ -41,4 +43,11 @@ userApi.delete('/:id', function(req, res, next) : void {
        res.status(200).send();
    })
 });
+
+userApi.get('/:id/teams', function(req, res, next) : void {
+    Team.find({"users":Types.ObjectId(req.params.id)}, function(err, teams){
+        if (err) return next(err)
+        res.status(200).send(teams)
+    })
+})
 

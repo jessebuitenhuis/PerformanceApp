@@ -16,6 +16,7 @@ import {AuthService} from "./auth/auth.service";
 import {TeamsComponent} from "./teams/teams.component"
 import {TeamDetailComponent} from "./teams/teamDetail.component"
 import {WherePipe} from "angular-pipes"
+import {UserDetailComponent} from "./users/userDetail.component"
 
 
 export class AppRequestOptions extends BaseRequestOptions {
@@ -35,6 +36,7 @@ export class AppRequestOptions extends BaseRequestOptions {
     declarations: [
         AppComponent,
         UsersComponent,
+        UserDetailComponent,
         TeamsComponent,
         TeamDetailComponent,
         SiteHeaderComponent,

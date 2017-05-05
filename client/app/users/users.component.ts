@@ -14,5 +14,6 @@ export class UsersComponent implements OnInit {
         var token = localStorage.getItem('token');
         this._userResource.setHeaders({'Authorization': token});
         this.users = this._userResource.query();
+
     }
 }

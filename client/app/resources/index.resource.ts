@@ -13,6 +13,13 @@ export class BaseResourceModel<T> extends ResourceModel<T & ResourceCRUD<T, T, T
         super();
     }
 
+    /**
+     * Does a new GET request and updates current model data
+     */
+    $get() {
+        this.$resource.get({id: this._id}, result => this.$setData(result))
+    }
+
     $removeFromList(list: BaseResourceModel<T>[]) : this {
         super.$remove().$observable.subscribe(() => {
             var index = list.indexOf(this);

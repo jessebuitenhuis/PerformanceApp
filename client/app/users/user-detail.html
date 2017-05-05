@@ -1,0 +1,23 @@
+<ol class="breadcrumb">
+    <li>
+        <a [routerLink]="['/users']">Users</a>
+    </li>
+    <li class="active">{{ user?.name }}</li>
+</ol>
+<h2>{{ user?.name }}</h2>
+
+
+<div class="well">
+    <legend>Add user to team</legend>
+    <form (submit)="addToTeam()">
+        <div class="alert alert-danger" *ngIf="userError">{{ userError }}</div>
+        <select [(ngModel)]="newTeam" name="new-team">
+            <option *ngFor="let team of availableTeams" [value]="team.id" [disabled]="teamIsSelected(team)">{{ team.name }}</option>
+        </select>
+        <button type="submit">Save</button>
+    </form>
+</div>
+<h3>Teams</h3>
+<ul>
+    <li *ngFor="let team of teams">{{team.id }}: <a [routerLink]="['/teams', team.id]">{{ team.name }}</a> - <a (click)="removeFromTeam(team._id)">Remove from team</a></li>
+</ul>

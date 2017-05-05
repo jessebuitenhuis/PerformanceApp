@@ -1,2 +1,2 @@
 <h2>Users</h2>
-<div *ngFor="let user of users">{{ user.firstName }} <a (click)="user.$removeFromList(users)">Delete</a></div>
+<div *ngFor="let user of users">{{ user.name }} <a [routerLink]="['/users', user.id]">Details</a> - <a (click)="user.$removeFromList(users)">Delete</a></div>

@@ -13,13 +13,6 @@ type teamUserInput = {id: any, userId: any}
 
 export interface Team extends ITeam {}
 export class Team extends BaseResourceModel<ITeam & TeamResource> {
-    /**
-     * Does a new GET request and updates current model data
-     */
-    $get() {
-        this.$resource.get({id: this._id}, result => this.$setData(result))
-    }
-
     $addUser(id: string) {
         return this.$resource.addUser({id: this._id, userId: id}, () => this.$get())
     }
